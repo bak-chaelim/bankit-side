@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소상공인의 시작과 전환을 함께합니다 - DankiX</title>
+    <title>소상공인의 시작과 전환을 함께합니다 - Bankit</title>
     <style>
         * {
             margin: 0;
@@ -40,6 +40,18 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        /* 로고 텍스트 스타일 (이미지 대신 텍스트 사용시) */
+        .logo-text {
             font-size: 24px;
             font-weight: bold;
             color: #009BDA;
@@ -720,7 +732,10 @@
     <nav>
         <div class="nav-container">
             <div class="logo">
-            <img src="assets/images/logo.png" alt="DankiX 로고">
+                <img src="assets/images/logo.png" alt="Bankit 로고">
+                <!-- 로고 이미지가 없을 경우 아래 주석 해제하고 위 img 태그 삭제
+                <span class="logo-text">Bankit</span>
+                -->
             </div>
             <ul class="nav-links">
                 <li><a href="#services">서비스 소개</a></li>
@@ -952,13 +967,13 @@
         <div class="footer-container">
             <h2>창업의 첫걸음부터 다시 일어서는 도전까지,<br>은행연합회가 함께합니다.</h2>
             <div class="footer-buttons">
-                <a href="#" class="footer-contact-btn">창업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 wish@bankit.kr</a>
-                <a href="#" class="footer-contact-btn">폐업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 wish@bankit.kr</a>
+                <a href="#" class="footer-contact-btn">창업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 <span class="__cf_email__" data-cfemail="66110f150e260407080d0f12480d14">[email&#160;protected]</span></a>
+                <a href="#" class="footer-contact-btn">폐업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 <span class="__cf_email__" data-cfemail="93e4fae0fbd3f1f2fdf8fae7bdf8e1">[email&#160;protected]</span></a>
             </div>
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // 부드러운 스크롤
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -971,14 +986,4 @@
                     });
                 }
             });
-        });
-
-        // 스크롤 다운 버튼
-        document.querySelector('.scroll-down').addEventListener('click', function() {
-            document.querySelector('.challenges').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    </script>
-</body>
-</html>
+        })

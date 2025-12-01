@@ -50,7 +50,6 @@
             cursor: pointer;
         }
 
-        /* 로고 텍스트 스타일 (이미지 대신 텍스트 사용시) */
         .logo-text {
             font-size: 24px;
             font-weight: bold;
@@ -74,17 +73,7 @@
             color: #009BDA;
         }
 
-        /* 섹션 공통 */
-        section {
-            padding: 100px 40px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* SEC01 - 히어로 */
+        /* SEC01 - 인터랙티브 히어로 */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -94,13 +83,52 @@
             text-align: center;
             padding-top: 120px;
             background: white;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 {
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 40px;
+        }
+
+        .hero-title {
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 60px;
             line-height: 1.4;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .hero-title.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .hero-subtitle {
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            color: #2D3748;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .hero-subtitle.active {
+            opacity: 1;
+            transform: translate(-50%, -50%);
         }
 
         .hero-image-wrapper {
@@ -108,15 +136,31 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            clip-path: inset(100% 0 0 0);
+            transition: clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-image-container.expanded {
+            clip-path: inset(0 0 0 0);
         }
 
         .hero-image {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 16px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .scroll-down {
+        .scroll-indicator {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -129,16 +173,17 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.5s ease;
             animation: bounce 2s infinite;
+            z-index: 10;
         }
 
-        .scroll-down:hover {
-            background: #0088C2;
-            transform: translate(-50%, -50%) scale(1.1);
+        .scroll-indicator.hidden {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
         }
 
-        .scroll-down::after {
+        .scroll-indicator::after {
             content: '↓';
             color: white;
             font-size: 28px;
@@ -157,10 +202,32 @@
             }
         }
 
+        .scroll-indicator.hidden {
+            animation: none;
+        }
+
+        /* 섹션 공통 */
+        section {
+            padding: 100px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         /* SEC02 - 2개 카드 */
         .challenges {
             background: white;
             padding: 120px 40px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .challenges.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .challenges h2 {
@@ -683,8 +750,12 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
+            .hero-title {
                 font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 24px;
             }
 
             .card-grid {
@@ -732,10 +803,8 @@
     <nav>
         <div class="nav-container">
             <div class="logo">
-                <img src="assets/images/logo.png" alt="Bankit 로고">
-                <!-- 로고 이미지가 없을 경우 아래 주석 해제하고 위 img 태그 삭제
-                <span class="logo-text">Bankit</span>
-                -->
+                <img src="assets/images/logo.png" alt="Bankit 로고" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="logo-text" style="display: none;">Bankit</span>
             </div>
             <ul class="nav-links">
                 <li><a href="#services">서비스 소개</a></li>
@@ -746,19 +815,25 @@
         </div>
     </nav>
 
-    <!-- SEC01 - 히어로 -->
-    <section class="hero">
-        <div class="container">
-            <h1>소상공인의<br>시작과 전환을 함께합니다</h1>
+    <!-- SEC01 - 인터랙티브 히어로 -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" id="heroTitle">소상공인의<br>시작과 전환을 함께합니다</h1>
             <div class="hero-image-wrapper">
-                <img src="assets/images/SEC01.png" alt="소상공인 지원" class="hero-image">
-                <div class="scroll-down"></div>
+                <div class="hero-image-container" id="heroImageContainer">
+                    <img src="assets/images/SEC01.png" alt="소상공인 지원" class="hero-image">
+                </div>
+                <div class="scroll-indicator" id="scrollIndicator"></div>
+            </div>
+            <div class="hero-subtitle" id="heroSubtitle">
+                당신의 내일, 혼자가 아닙니다.<br>
+                준비된 시작과 안정적 전환을 지원합니다.
             </div>
         </div>
     </section>
 
     <!-- SEC02 - 도전 -->
-    <section class="challenges">
+    <section class="challenges" id="challenges">
         <div class="container">
             <h2>소상공인이 마주하는 어려움, 혼자 고민하지 않도록</h2>
             <div class="card-grid">
@@ -967,13 +1042,79 @@
         <div class="footer-container">
             <h2>창업의 첫걸음부터 다시 일어서는 도전까지,<br>은행연합회가 함께합니다.</h2>
             <div class="footer-buttons">
-                <a href="#" class="footer-contact-btn">창업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 <span class="__cf_email__" data-cfemail="66110f150e260407080d0f12480d14">[email&#160;protected]</span></a>
-                <a href="#" class="footer-contact-btn">폐업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 <span class="__cf_email__" data-cfemail="93e4fae0fbd3f1f2fdf8fae7bdf8e1">[email&#160;protected]</span></a>
+                <a href="#" class="footer-contact-btn">창업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 wish@bankit.kr</a>
+                <a href="#" class="footer-contact-btn">폐업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 wish@bankit.kr</a>
             </div>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
+        // 히어로 섹션 인터랙티브 효과
+        let heroAnimationComplete = false;
+        let isAnimating = false;
+
+        window.addEventListener('scroll', function() {
+            if (heroAnimationComplete || isAnimating) return;
+
+            const heroSection = document.getElementById('hero');
+            const scrollPosition = window.scrollY;
+            const heroHeight = heroSection.offsetHeight;
+            
+            // 스크롤이 100px 이상일 때 애니메이션 시작
+            if (scrollPosition > 100 && !isAnimating) {
+                isAnimating = true;
+                startHeroAnimation();
+            }
+        });
+
+        // 스크롤 인디케이터 클릭 이벤트
+        document.getElementById('scrollIndicator').addEventListener('click', function() {
+            if (!isAnimating) {
+                isAnimating = true;
+                startHeroAnimation();
+            }
+        });
+
+        function startHeroAnimation() {
+            const heroTitle = document.getElementById('heroTitle');
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const imageContainer = document.getElementById('heroImageContainer');
+            const challengesSection = document.getElementById('challenges');
+
+            // 1단계: 이미지 확장 시작
+            imageContainer.classList.add('expanded');
+            
+            // 2단계: 스크롤 버튼 숨김 (0.3초 후)
+            setTimeout(() => {
+                scrollIndicator.classList.add('hidden');
+            }, 300);
+
+            // 3단계: 타이틀 페이드 아웃 (0.5초 후)
+            setTimeout(() => {
+                heroTitle.classList.add('fade-out');
+            }, 500);
+
+            // 4단계: 서브타이틀 페이드 인 (1초 후)
+            setTimeout(() => {
+                heroSubtitle.classList.add('active');
+            }, 1000);
+
+            // 5단계: 다음 섹션 표시 및 자동 스크롤 (2.5초 후)
+            setTimeout(() => {
+                challengesSection.classList.add('visible');
+                heroAnimationComplete = true;
+                
+                // 부드럽게 다음 섹션으로 스크롤 (3초 후)
+                setTimeout(() => {
+                    challengesSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 500);
+            }, 2500);
+        }
+
         // 부드러운 스크롤
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -986,4 +1127,12 @@
                     });
                 }
             });
-        })
+        });
+
+        // 페이지 로드 시 맨 위로
+        window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>

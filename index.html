@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소상공인의 시작과 전환을 함께합니다 - DankiX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            color: #2D3748;
+            overflow-x: hidden;
+        }
+
+        /* 네비게이션 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #009BDA;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2D3748;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #009BDA;
+        }
+
+        /* 섹션 공통 */
+        section {
+            padding: 100px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* SEC01 - 히어로 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 120px;
+            background: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            line-height: 1.4;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .scroll-down {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #009BDA;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down:hover {
+            background: #0088C2;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .scroll-down::after {
+            content: '↓';
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+            40% {
+                transform: translate(-50%, -50%) translateY(-10px);
+            }
+            60% {
+                transform: translate(-50%, -50%) translateY(-5px);
+            }
+        }
+
+        /* SEC02 - 2개 카드 */
+        .challenges {
+            background: white;
+            padding: 120px 40px;
+        }
+
+        .challenges h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .challenge-card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .challenge-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 40px 30px;
+            color: white;
+        }
+
+        .card-overlay .tag {
+            color: #009BDA;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card-overlay h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* SEC03 - 통계 + CTA */
+        .statistics {
+            background: #F7F9FB;
+            padding: 120px 40px;
+        }
+
+        .statistics h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .statistics p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 60px;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto 80px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-icon img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .stat-item h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2D3748;
+            margin-bottom: 8px;
+        }
+
+        .stat-unit {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .stat-note {
+            font-size: 14px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        .cta-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cta-card {
+            background: #009BDA;
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .cta-card:hover {
+            background: #0088C2;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 155, 218, 0.3);
+        }
+
+        .cta-card.dark {
+            background: #2D3748;
+        }
+
+        .cta-card.dark:hover {
+            background: #1a202c;
+        }
+
+        .cta-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta-card p {
+            font-size: 16px;
+            opacity: 0.9;
+            color: white;
+        }
+
+        /* SEC04 - 서비스 그리드 */
+        .services {
+            background: white;
+            padding: 120px 40px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: #009BDA;
+            box-shadow: 0 4px 20px rgba(0, 155, 218, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: #EBF8FF;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .service-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .services-cta {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .services-cta h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .arrow-down {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            color: #009BDA;
+            font-size: 32px;
+            animation: bounceArrow 2s infinite;
+        }
+
+        @keyframes bounceArrow {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(10px);
+            }
+            60% {
+                transform: translateY(5px);
+            }
+        }
+
+        /* SEC05 - 프로세스 */
+        .process {
+            background: #009BDA;
+            color: white;
+            padding: 120px 40px;
+        }
+
+        .process h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            background: white;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-label {
+            color: #009BDA;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step-title {
+            color: #2D3748;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .process-arrow {
+            color: white;
+            font-size: 32px;
+            font-weight: 300;
+        }
+
+        /* SEC06 - 사례 */
+        .cases {
+            background: white;
+            padding: 120px 40px;
+        }
+
+        .cases h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 30px;
+            transition: transform 0.5s ease;
+        }
+
+        .case-card {
+            min-width: calc(33.333% - 20px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .case-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .case-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 40px 30px;
+            color: white;
+        }
+
+        .case-card.featured .case-overlay {
+            background: linear-gradient(to top, rgba(0, 155, 218, 0.95), transparent);
+        }
+
+        .case-overlay h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .case-btn {
+            background: #009BDA;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .carousel-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #E2E8F0;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover {
+            border-color: #009BDA;
+            color: #009BDA;
+        }
+
+        .cases-footer {
+            text-align: center;
+        }
+
+        .cases-footer-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-btn {
+            background: #009BDA;
+            color: white;
+            padding: 16px 48px;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .footer-btn:hover {
+            background: #0088C2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 155, 218, 0.3);
+        }
+
+        .footer-btn.dark {
+            background: #2D3748;
+        }
+
+        .footer-btn.dark:hover {
+            background: #1a202c;
+        }
+
+        .disclaimer {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* SEC07 - 푸터 */
+        footer {
+            background: #2D3748;
+            color: white;
+            padding: 80px 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-container h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            line-height: 1.5;
+        }
+
+        .footer-buttons {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .footer-contact-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .footer-contact-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 반응형 */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .process-steps {
+                flex-wrap: wrap;
+            }
+
+            .case-card {
+                min-width: calc(50% - 15px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .cta-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+
+            .process-arrow {
+                transform: rotate(90deg);
+            }
+
+            .case-card {
+                min-width: 100%;
+            }
+
+            .cases-footer-buttons {
+                flex-direction: column;
+            }
+
+            .footer-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">DankiX</div>
+            <ul class="nav-links">
+                <li><a href="#services">서비스 소개</a></li>
+                <li><a href="#consulting">건설팅 소개</a></li>
+                <li><a href="#cases">사례 확인</a></li>
+                <li><a href="#contact">소상공인지원사업</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- SEC01 - 히어로 -->
+    <section class="hero">
+        <div class="container">
+            <h1>소상공인의<br>시작과 전환을 함께합니다</h1>
+            <div class="hero-image-wrapper">
+                <img src="assets/images/SEC01.png" alt="소상공인 지원" class="hero-image">
+                <div class="scroll-down"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEC02 - 도전 -->
+    <section class="challenges">
+        <div class="container">
+            <h2>소상공인이 마주하는 어려움, 혼자 고민하지 않도록</h2>
+            <div class="card-grid">
+                <div class="challenge-card">
+                    <img src="assets/images/SEC02.png" alt="창업 준비 단계">
+                    <div class="card-overlay">
+                        <div class="tag">창업 준비 단계에서</div>
+                        <h3>많이 하는 고민</h3>
+                    </div>
+                </div>
+                <div class="challenge-card">
+                    <img src="assets/images/SEC02.png" alt="정리·전환 단계">
+                    <div class="card-overlay">
+                        <div class="tag">정리·전환 단계에서</div>
+                        <h3>마주하는 고민</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEC03 - 통계 -->
+    <section class="statistics">
+        <div class="container">
+            <h2>소상공인의 지속가능한 내일을 위한 든든한 동반자</h2>
+            <p>창업을 준비하는 예비 소상공인과 어려움을 겪는 폐업예정자를 위해<br>맞춤형 컨설팅과 컨설팅 이후 지원금을 제공합니다.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <span style="font-size: 60px;">🏪</span>
+                    </div>
+                    <h3>준비된 창업 지원</h3>
+                    <div class="stat-number">320<span class="stat-unit">명</span></div>
+                    <div class="stat-unit">840회</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <span style="font-size: 60px;">🔒</span>
+                    </div>
+                    <h3>안정적인 폐업 지원</h3>
+                    <div class="stat-number">480<span class="stat-unit">명</span></div>
+                    <div class="stat-unit">1,260회</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <span style="font-size: 60px;">🏆</span>
+                    </div>
+                    <h3>우수 이수자 지원</h3>
+                    <div class="stat-number">100<span class="stat-unit">만 원 지원금 지급*</span></div>
+                    <div class="stat-note">*실제 참여패널이 확인된 경우</div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="#" class="cta-card">
+                    <h3>창업 컨설팅</h3>
+                    <p>사업준비·운영에 어려움을 겪는<br>예비 창업자·창업 초기 소상공인 대상</p>
+                </a>
+                <a href="#" class="cta-card dark">
+                    <h3>폐업 컨설팅</h3>
+                    <p>사업 정리 절차가 필요하고<br>폐업 예정자 대상</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEC04 - 서비스 -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h4>상권 분석</h4>
+                    <p>입지·경쟁환경 분석을 통한 창업 성공 가능성 검토</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛍️</div>
+                    <h4>사업계획서 작성지도</h4>
+                    <p>창업 방향을 정리하는 맞춤형 사업계획서 수립 지원</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h4>마케팅</h4>
+                    <p>브랜드·고객 분석을 기반으로 효율적 홍보·판매 전략 제안</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h4>직원관리</h4>
+                    <p>고용·노무 리스크를 줄이는 현장 중심 인력관리 지원</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📍</div>
+                    <h4>프랜차이즈</h4>
+                    <p>창업 준비·가맹 컨트롤 능는 프랜차이즈 선택 및 운영 가이드</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h4>브랜딩</h4>
+                    <p>브랜드 메시지·관점들을 전달하는 브랜드 컨설팅 강화</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💬</div>
+                    <h4>법률·세무·노무</h4>
+                    <p>창업 운영 과정에서 필요한 전문 법률·세무·노무 상담 연계</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h4>메뉴 개발</h4>
+                    <p>시장·고객 분석 기반 경쟁력 있는 메뉴 구성 컨설팅</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
+                    <h4>기술 전수</h4>
+                    <p>업종 특화 기술을 익히는 실습 중심 기술 전수 지원</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h4>디지털 전환</h4>
+                    <p>온라인·스마트 기술 도입을 돕는 디지털 활용 역량 강화</p>
+                </div>
+            </div>
+
+            <div class="services-cta">
+                <div class="arrow-down">↓</div>
+                <h3>준비된 창업 지원</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEC05 - 프로세스 -->
+    <section class="process">
+        <div class="container">
+            <h2>컨설팅부터 우수 지원금까지, 이렇게 지원해드려요</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-label">step 1</div>
+                    <div class="step-title">사전 컨설팅</div>
+                </div>
+                <div class="process-arrow">›</div>
+                <div class="process-step">
+                    <div class="step-label">step 2</div>
+                    <div class="step-title">본 컨설팅</div>
+                </div>
+                <div class="process-arrow">›</div>
+                <div class="process-step">
+                    <div class="step-label">step 3</div>
+                    <div class="step-title">지원금 지급</div>
+                </div>
+                <div class="process-arrow">›</div>
+                <div class="process-step">
+                    <div class="step-label">step 4</div>
+                    <div class="step-title">사후관리</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEC06 - 사례 -->
+    <section id="cases" class="cases">
+        <div class="container">
+            <h2>컨설팅과 함께한 사장님들의 이야기도 확인해보세요</h2>
+            
+            <div class="carousel-wrapper">
+                <div class="carousel">
+                    <div class="case-card">
+                        <img src="assets/images/SEC06.png" alt="사례 1">
+                        <div class="case-overlay">
+                            <h3>다시 웃게 된 우리 동네 카페 이야기</h3>
+                        </div>
+                    </div>
+                    <div class="case-card featured">
+                        <img src="assets/images/SEC06.png" alt="사례 2">
+                        <div class="case-overlay">
+                            <h3>손끝에서 피어난 두 번째 시작</h3>
+                            <button class="case-btn">이야기 보러 가기 →</button>
+                        </div>
+                    </div>
+                    <div class="case-card">
+                        <img src="assets/images/SEC06.png" alt="사례 3">
+                        <div class="case-overlay">
+                            <h3>폐업 대신 재도전, 나만의 길을 찾다</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn">‹</button>
+                <button class="carousel-btn">||</button>
+                <button class="carousel-btn">›</button>
+            </div>
+
+            <div class="cases-footer">
+                <div class="cases-footer-buttons">
+                    <a href="#" class="footer-btn">창업 컨설팅 신청하러 가기 →</a>
+                    <a href="#" class="footer-btn dark">폐업 컨설팅 신청하러 가기 →</a>
+                </div>
+                <p class="disclaimer">* 선택하신 뱅크잇 신청패널이자 이동해 신청을 이어서 진행할 수 있어요.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEC07 - 푸터 -->
+    <footer id="contact">
+        <div class="footer-container">
+            <h2>창업의 첫걸음부터 다시 일어서는 도전까지,<br>은행연합회가 함께합니다.</h2>
+            <div class="footer-buttons">
+                <a href="#" class="footer-contact-btn">창업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 wish@bankit.kr</a>
+                <a href="#" class="footer-contact-btn">폐업 컨설팅 문의  |  전화문의 02-6952-5558  |  메일문의 wish@bankit.kr</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 스크롤 다운 버튼
+        document.querySelector('.scroll-down').addEventListener('click', function() {
+            document.querySelector('.challenges').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
